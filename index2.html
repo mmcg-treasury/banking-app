@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stripe Account Management</title>
+</head>
+<body>
+  <h1>Create a Stripe Account</h1>
+  <form action="/create_account" method="POST">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <button type="submit">Create Account</button>
+  </form>
+
+  <h1>Add Feature to Account</h1>
+  <form action="/add_feature" method="POST">
+    <label for="account_id">Account ID:</label>
+    <input type="text" id="account_id" name="account_id" required>
+    <label for="feature">Feature:</label>
+    <input type="text" id="feature" name="feature" required>
+    <button type="submit">Add Feature</button>
+  </form>
+
+  <h1>Adjust Account Balance</h1>
+  <form action="/adjust_balance" method="POST">
+    <label for="account_id">Account ID:</label>
+    <input type="text" id="account_id" name="account_id" required>
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" name="amount" required>
+    <button type="submit">Adjust Balance</button>
+  </form>
+
+  <h1>Issue Instant Deposit</h1>
+  <form action="/issue_deposit" method="POST">
+    <label for="account_id">Account ID:</label>
+    <input type="text" id="account_id" name="account_id" required>
+    <label for="debit_card_token">Debit Card Token:</label>
+    <input type="text" id="debit_card_token" name="debit_card_token" required>
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" name="amount" required>
+    <button type="submit">Issue Deposit</button>
+  </form>
+
+  <h1>Issue Instant Refund</h1>
+  <form action="/issue_refund" method="POST">
+    <label for="account_id">Account ID:</label>
+    <input type="text" id="account_id" name="account_id" required>
+    <label for="debit_card_token">Debit Card Token:</label>
+    <input type="text" id="debit_card_token" name="debit_card_token" required>
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" name="amount" required>
+    <button type="submit">Issue Refund</button>
+  </form>
+</body>
+</html>
