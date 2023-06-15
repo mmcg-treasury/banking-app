@@ -11,6 +11,7 @@
 # For more information about SLSA and how it improves the supply-chain, visit slsa.dev.
 
 name: SLSA generic generator
+permissions: write-all
 on:
   workflow_dispatch:
   release:
@@ -58,7 +59,7 @@ jobs:
     needs: [build]
     permissions:
       actions: write   # To read the workflow path.
-      id-token: write "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"
+      id-token: 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
       contents: write # To add assets to a release.
     uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.4.0
     with:
