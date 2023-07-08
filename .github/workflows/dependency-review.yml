@@ -11,7 +11,7 @@ permissions: write-all
 
 jobs:
   dependency-review:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest, windows.latest, ios-latest, andriod-latest, macos-latest
     steps:
       - name: 'Checkout Repository'
         uses: actions/checkout@v3
