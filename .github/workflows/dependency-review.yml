@@ -1,19 +1,36 @@
-# Dependency Review Action
-#
-# This Action will scan dependency manifest files that change as part of a Pull Request, surfacing known-vulnerable versions of the packages declared or updated in the PR. Once installed, if the workflow run is marked as required, PRs introducing known-vulnerable packages will be blocked from merging.
-#
+# Enhanced Dependency Review Action
+
+# This Action performs a comprehensive scan on the dependency manifest files that are modified as part of a Pull Request. It identifies and reports any known-vulnerable versions of the packages that are declared or updated in the PR. Once this Action is installed and the workflow run is marked as required, it prevents PRs that introduce known-vulnerable packages from being merged.
+
 # Source repository: https://github.com/actions/dependency-review-action
 # Public documentation: https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review#dependency-review-enforcement
-name: 'Dependency Review'
-on: [pull_request]
 
-permissions: write-all
+name: 'Enhanced Dependency Review'
+on: 
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions: 
+  contents: write
 
 jobs:
   dependency-review:
-    runs-on: ubuntu-latest, windows.latest, ios-latest, andriod-latest, macos-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, ios-latest, android-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: 'Checkout Repository'
         uses: actions/checkout@v3
-      - name: 'Dependency Review'
+      - name: 'Perform Dependency Review'
         uses: actions/dependency-review-action@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: 'Report Vulnerabilities'
+        run: |
+          if [[ -n "${{ steps.dependency-review.outputs.vulnerabilities }}" ]]; then
+            echo "Vulnerabilities found in dependencies:"
+            echo "${{ steps.dependency-review.outputs.vulnerabilities }}"
+            exit 1
+          fi
+        shell: bash
